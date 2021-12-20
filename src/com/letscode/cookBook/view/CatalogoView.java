@@ -41,7 +41,7 @@ public class CatalogoView {
     private void add() {
         //TODO: Implement Add
         NovaReceitaView nova = new NovaReceitaView();
-        this.receita = new Receita( nova.askNome(), nova.askCategoria() );
+        this.receita = new Receita( nova.askNome("da receita"), nova.askCategoria() );
         this.receita.setTempoPreparo( nova.askTempoPreparo() );
         this.receita.setRendimento( nova.askRendimento() );
         this.receita.setIngredientes( nova.askIngredientes() );

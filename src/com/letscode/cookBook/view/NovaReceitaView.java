@@ -15,32 +15,33 @@ public class NovaReceitaView {
     Scanner scanner;
     Receita receita;
     String nome;
+    private static int categoria;
 
     public NovaReceitaView() {
         this.scanner = new Scanner(System.in);
     }
 
-    public String askNome() {
-        System.out.print("Qual o nome da receita?: ");
-        nome = scanner.nextLine();
+    public String askNome(String tipo) {
+        System.out.printf("Qual o nome %s?: ", tipo);
+        nome = new Scanner(System.in).nextLine();
         if (nome.isBlank()) {
             System.out.println("Nome inválido!");
-            askNome();
+            askNome(tipo);
         }
         return nome;
     }
 
     public Categoria askCategoria() {
+
         for (Categoria cat : Categoria.values()) {
             System.out.printf("%d - %s\n", cat.ordinal(), cat.name());
         }
         System.out.print("Qual a categoria da receita?: ");
-        int categoria = scanner.nextInt();
+        categoria = scanner.nextInt();
         if (categoria < 0 || categoria >= Categoria.values().length) {
             System.out.println("Categoria inválida!");
             askCategoria();
         }
-        //System.out.println(Categoria.values()[categoria]);
         return Categoria.values()[categoria];
     }
 
@@ -62,7 +63,7 @@ public class NovaReceitaView {
             System.out.print("Qual é o rendimento da receita?: ");
             quantidade = scanner.nextInt();
             if (quantidade <= 0) {
-                System.out.println("Rendimento inválido! O rendimento não pode ser menor ou igual a zero, tente novamente");
+                System.out.println("O rendimento deve ser maior que zero, tente novamente");
                 askRendimento();
             }
             quantidadeOk = true;
@@ -72,7 +73,7 @@ public class NovaReceitaView {
         }
         System.out.print("Qual o tipo de rendimento da receita?: ");
         int tipoRendimento = scanner.nextInt();
-        if ( tipoRendimento < 0 || tipoRendimento >= Categoria.values().length ) {
+        if ( tipoRendimento < 0 || tipoRendimento >= TipoRendimento.values().length ) {
             System.out.println("Tipo de rendimento inválido!");
             askRendimento();
         }
@@ -84,8 +85,7 @@ public class NovaReceitaView {
         List<Ingrediente> ingredientes = new ArrayList<>();
         String op = "s";
         do {
-            System.out.print("Informe o nome do ingrediente: ");
-            String nome = new Scanner(System.in).nextLine();
+            String nome = askNome("do ingrediente");
             System.out.print("Informe a quantidade: ");
             int quantidade = scanner.nextInt();
             for ( TipoMedida tipo : TipoMedida.values() ) {
